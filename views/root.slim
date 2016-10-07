@@ -1,1 +1,13 @@
 pre asd
+
+coffee:
+	
+	$ ->	
+	
+		# websockets
+		exampleSocket = new WebSocket("ws://localhost:4567");
+		exampleSocket.send("Here's some text that the server is urgently awaiting!");
+
+	  # initial data
+	  window.appData = $.get("http://localhost:4567/initial_data").then (response) ->
+	    console.dir response

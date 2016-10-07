@@ -1,29 +1,45 @@
+# dependencies
 require 'sinatra'
 require 'pry'
 require 'pstore'
 require 'json'
+require 'faker'
 require 'awesome_print'
+require 'faye/websocket'
+
+# load environment variables
 require 'dotenv'
 Dotenv.load
 
+# middleware
+require 'rack/contrib/profiler'
+use Rack::Profiler if ENV['RACK_ENV'] == 'development'
+require 'rack/contrib/try_static'
+use Rack::TryStatic, :root => 'bower_components/', :urls => %w[/]
+
+# lib
 require_relative "./lib/database.rb"
 require_relative "./lib/initial_data_load.rb"
 require_relative "./lib/pstore_database_sync.rb"
 require_relative "./lib/json_database_sync.rb"
-require_relative "./lib/bikes_index.rb"
-require_relative "./lib/add_bike.rb"
-require_relative "./lib/client_root.rb"
+require_relative "./lib/websocket_helpers.rb"
+require_relative "./lib/auth.rb"
 
-get '/bikes' do
-	BikesIndex.call
-end
+# routes
+require_relative "./lib/client_root_html_route.rb"
+require_relative "./lib/initial_data_json_route.rb"
 
-get '/add_bike' do
-	AddBike.call redirect: method(:redirect)
-end
+# json api routes are mapped in a separate file
+require "./lib/api_routes.rb"
 
+# the root HTML page, which also sets up websockets
 get '/' do
-	ClientRoot.call slim: method(:slim)
+	ClientRootHtmlRoute.call slim: method(:slim), env: env, params: params
+end
+
+# a json route to send initial data to clients
+get '/initial_data' do
+	InitialDataJsonRoute.call(params: params)
 end
 
 
