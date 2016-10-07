@@ -1,8 +1,8 @@
-AddBike = -> (redirect) do
+AddBike = -> (request_helpers) do
 	$data.bikes.push({
 		owner: "foo",
 		type: "mountain",
 		status: "stolen"
 	})
-	redirect.call "/bikes"
+	request_helpers[:redirect].call "/bikes"
 end
