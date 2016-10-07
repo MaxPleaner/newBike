@@ -1,5 +1,4 @@
-
-def html_page(content)
+HtmlPage = -> (content) do
 	<<-HTML
 		<!doctype html>
 		<html lang='en'>

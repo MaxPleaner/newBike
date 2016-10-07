@@ -1,10 +1,8 @@
-$jsonDatabaseSyncInterval = 5
-
 Thread.new do
 	loop do
-		File.open($bikeJsonPath, 'w') do |f|
+		File.open(ENV["BikeJsonPath"], 'w') do |f|
 			f.write({ bikes: $data.bikes }.to_json)
 		end
-		sleep $jsonDatabaseSyncInterval
+		sleep ENV["JsonDatabaseSyncInterval"].to_i
 	end
 end

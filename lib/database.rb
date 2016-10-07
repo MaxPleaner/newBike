@@ -1,1 +1,1 @@
-$db = PStore.new("db.pstore")
+$db = PStore.new(ENV["PstoreDatabasePath"])

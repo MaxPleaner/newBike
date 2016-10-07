@@ -1,8 +1,8 @@
-get '/add_bike' do
+AddBike = -> (redirect) do
 	$data.bikes.push({
 		owner: "foo",
 		type: "mountain",
 		status: "stolen"
 	})
-	redirect "/bikes"
+	redirect.call "/bikes"
 end
