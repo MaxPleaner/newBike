@@ -24,6 +24,7 @@ require_relative "./lib/pstore_database_sync.rb"
 require_relative "./lib/json_database_sync.rb"
 require_relative "./lib/websocket_helpers.rb"
 require_relative "./lib/auth.rb"
+require_relative "./lib/language_patches.rb"
 
 # routes
 require_relative "./lib/client_root_html_route.rb"
